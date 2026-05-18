@@ -5,21 +5,25 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { NavLinks } from "@/Constant/Constant";
 import ThemeToggler from "@/components/Helper/ThemeTogler";
-
-const Nav = () => {
-  const  [navBg, setNavBg] = useState(false);
-  useEffect(()=> {
+type Props = {
+  openNav: () => void;
+};
+const Nav = ({ openNav }: Props) => {
+  const [navBg, setNavBg] = useState(false);
+  useEffect(() => {
     const handler = () => {
       setNavBg(window.scrollY >= 90);
     };
 
-    window.addEventListener('scroll', handler);
+    window.addEventListener("scroll", handler);
     handler();
 
-    return () => window.removeEventListener('scroll', handler);
-  },[])
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
   return (
-    <div className={`fixed top-0 left-0 w-full h-[12vh] z-100 transition-all duration-200 ${navBg ? 'bg-white shadow-md dark:bg-gray-800' : 'bg-transparent'}`}>
+    <div
+      className={`fixed top-0 left-0 w-full h-[12vh] z-100 transition-all duration-200 ${navBg ? "bg-white shadow-md dark:bg-gray-800" : "bg-transparent"}`}
+    >
       <div className="flex items-center justify-start gap-10 h-full w-[90%] xl:w-[80%] mx-auto">
         {/* Logo*/}
         <Logo />
@@ -50,7 +54,10 @@ const Nav = () => {
         {/*Theme toggler*/}
         <ThemeToggler />
         {/* Burger menu */}
-        <MenuIcon className="w-8 h-8 cursor-pointer text-black dark:text-white lg:hidden" />
+        <MenuIcon
+          onClick={openNav}
+          className="w-8 h-8 cursor-pointer text-black dark:text-white lg:hidden"
+        />
       </div>
     </div>
   );
